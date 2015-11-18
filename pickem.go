@@ -33,6 +33,10 @@ func pickemHandler(w http.ResponseWriter, r *http.Request) {
     renderTemplate(w, "pickem", &Pickem{Name: "pickem"})
 }
 
+func registerHandler(w http.ResponseWriter, r *http.Request) {
+    renderTemplate(w, "reg", nil)
+}
+
 func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         m := validPath.FindStringSubmatch(r.URL.Path)
@@ -46,6 +50,7 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 
 func main() {
 	http.HandleFunc("/pickem/", pickemHandler)
+	http.HandleFunc("/reg/", registerHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
