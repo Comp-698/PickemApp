@@ -37,6 +37,10 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
     renderTemplate(w, "register", nil)
 }
 
+func privacyHandler(w http.ResponseWriter, r *http.Request) {
+    renderTemplate(w, "privacy", nil)
+}
+
 func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         m := validPath.FindStringSubmatch(r.URL.Path)
@@ -51,6 +55,7 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 func main() {
 	http.HandleFunc("/pickem/", pickemHandler)
 	http.HandleFunc("/register/", registerHandler)
+	http.HandleFunc("/privacy/", privacyHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
