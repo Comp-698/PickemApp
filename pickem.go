@@ -34,7 +34,7 @@ func pickemHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func registerHandler(w http.ResponseWriter, r *http.Request) {
-    renderTemplate(w, "reg", nil)
+    renderTemplate(w, "register", nil)
 }
 
 func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
@@ -50,7 +50,7 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 
 func main() {
 	http.HandleFunc("/pickem/", pickemHandler)
-	http.HandleFunc("/reg/", registerHandler)
+	http.HandleFunc("/register/", registerHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
