@@ -1,0 +1,39 @@
+{{define "leaderboard"}}
+<html>
+{{template "head"}}
+
+<body>
+<div id="header">
+{{template "header"}}
+</div>
+<div id="nav">
+{{template "nav"}}
+</div>
+	
+	<table border="1" style="width:100%">
+  	<tr>
+    		<td>User</td>
+    		<td>Score</td>
+    		<td>User</td>
+		<td>Score</td>
+  	</tr>
+  	<tr>
+    		<td>Eve</td>
+    		<td>94</td>
+    		<td>Bob</td>
+		<td>50</td>
+  	</tr>
+	<tr>
+		<td>Joseph</td>
+		<td>30</td>
+		<td>pick'emmaster9000</td>
+		<td>15</td>
+	</table>
+
+<div id="footer">
+		{{template "footer"}}
+	</div> 
+
+</body>
+</html>
+{{end}}
