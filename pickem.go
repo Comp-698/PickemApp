@@ -41,6 +41,18 @@ func privacyHandler(w http.ResponseWriter, r *http.Request) {
     renderTemplate(w, "privacy", nil)
 }
 
+func leaderboardHandler(w http.ResponseWriter, r *http.Request) {
+    renderTemplate(w, "leaderboard", nil)
+}
+
+func donateHandler(w http.ResponseWriter, r *http.Request) {
+    renderTemplate(w, "donate", nil)
+}
+
+func contactHandler(w http.ResponseWriter, r *http.Request) {
+    renderTemplate(w, "contact", nil)
+}
+
 func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         m := validPath.FindStringSubmatch(r.URL.Path)
@@ -55,7 +67,10 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 func main() {
 	http.HandleFunc("/pickem/", pickemHandler)
 	http.HandleFunc("/register/", registerHandler)
+	http.HandleFunc("/leaderboard/", leaderboardHandler)
 	http.HandleFunc("/privacy/", privacyHandler)
+	http.HandleFunc("/donate/", donateHandler)
+	http.HandleFunc("/contact/", contactHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
