@@ -3,20 +3,28 @@ PickemApp
 
 PickemApp is a web based project for the Comp 698 UNHM class that allows users to bet on the outcomes of various sporting events. 
 
-Huong was here
+some super handy commands to keep *ahem* handy
 
-I was here.
+steps to get rolling from almost any computer:
 
-So was I, but I shouldn't be.
+Download golang, Install it, and then setup your GOPATH
+https://golang.org/doc/install
+https://golang.org/doc/install#testing (setting up your GOPATH)
 
-Jonnyt989 was here!!!
+this assumes you have already forked the https://github.com/Comp-698/PickemApp
 
-Jon S was here again
+and use your Github user, in place of mine - which is Gargame11
+tchadwick@artemis:~/workspace/go$ git clone https://github.com/Gargame11/PickemApp
 
-Josh Was here ------> .
-		      
-Josh was here correctly!
+tchadwick@artemis:~/workspace/go/PickemApp$ git remote add upstream https://github.com/Comp-698/PickemApp.git
 
-Vitali was here
+run this often, both to make sure you are up to date and to make sure your ongoing changes don't break
+tchadwick@artemis:~/workspace/go/PickemApp$ git pull upstream master; git push;
 
-Trevor
+tchadwick@artemis:~/workspace/go/PickemApp$ go get -d github.com/Comp-698/PickemLib
+
+tchadwick@artemis:~/workspace/go/PickemApp$ go build pickem.go
+
+tchadwick@artemis:~/workspace/go/PickemApp$ go run pickem.go
+
+Develop.
