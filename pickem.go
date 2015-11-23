@@ -53,6 +53,18 @@ func contactHandler(w http.ResponseWriter, r *http.Request) {
     renderTemplate(w, "contact", nil)
 }
 
+func picksHandler(w http.ResponseWriter, r *http.Request) {
+    renderTemplate(w, "picks", nil)
+}
+
+func gameChoicesHandler(w http.ResponseWriter, r *http.Request) {
+    renderTemplate(w, "gameChoices", nil)
+}
+
+func interfaceHandler(w http.ResponseWriter, r *http.Request) {
+    renderTemplate(w, "interface", nil)
+}
+
 func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         m := validPath.FindStringSubmatch(r.URL.Path)
@@ -71,6 +83,9 @@ func main() {
 	http.HandleFunc("/privacy/", privacyHandler)
 	http.HandleFunc("/donate/", donateHandler)
 	http.HandleFunc("/contact/", contactHandler)
+	http.HandleFunc("/picks/", picksHandler)
+	http.HandleFunc("/gameChoices/", gameChoicesHandler)
+	http.HandleFunc("/interface/", interfaceHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
