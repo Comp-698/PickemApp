@@ -21,7 +21,7 @@ tchadwick@artemis:~/workspace/go/PickemApp$ git remote add upstream https://gith
 run this often, both to make sure you are up to date and to make sure your ongoing changes don't break
 tchadwick@artemis:~/workspace/go/PickemApp$ git pull upstream master; git push;
 
-tchadwick@artemis:~/workspace/go/PickemApp$ go get -d github.com/Comp-698/PickemLib
+tchadwick@artemis:~/workspace/go/PickemApp$ go get -u github.com/Comp-698/PickemLib
 
 tchadwick@artemis:~/workspace/go/PickemApp$ go build pickem.go
 
