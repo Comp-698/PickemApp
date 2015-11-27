@@ -28,3 +28,4 @@ tchadwick@artemis:~/workspace/go/PickemApp$ go build pickem.go
 tchadwick@artemis:~/workspace/go/PickemApp$ go run pickem.go
 
 Develop.
+-verified working - Jon S 6:42pm 27 Nov
