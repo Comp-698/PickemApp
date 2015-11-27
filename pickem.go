@@ -12,7 +12,7 @@ import (
     "github.com/Comp-698/PickemLib"
 )
 
-var pickem = PickemLib.Data("PickemGameOne")
+// var pickem = PickemLib.Data("PickemGameOne")
 
 var validPath = regexp.MustCompile("^/(pickem|other)/([a-zA-Z0-9]+)$")
 
@@ -27,7 +27,9 @@ func renderTemplate(w http.ResponseWriter, tmpl string, p *PickemLib.Pickem) {
 }
 
 func pickemHandler(w http.ResponseWriter, r *http.Request) {
-    renderTemplate(w, "pickem", nil)
+
+    var pickem = PickemLib.Saturate("PickemGame")
+    renderTemplate(w, "pickem", pickem)
 }
 
 func registerHandler(w http.ResponseWriter, r *http.Request) {
@@ -84,8 +86,4 @@ func main() {
 	http.HandleFunc("/gameChoices/", gameChoicesHandler)
 	http.HandleFunc("/interface/", interfaceHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
-}
-
-func handler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte( PickemLib.Data("paste") ) )
 }
