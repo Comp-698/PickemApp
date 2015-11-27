@@ -12,17 +12,14 @@ import (
     "github.com/Comp-698/PickemLib"
 )
 
-type Pickem struct {
-    Picks map[string]int
-    Name string
-}
+var pickem = PickemLib.Data("PickemGameOne")
 
 var validPath = regexp.MustCompile("^/(pickem|other)/([a-zA-Z0-9]+)$")
 
 // var templates = template.Must( template.ParseFiles( "pickem.html" ) )
 var templates = template.Must(template.ParseGlob("templates/*"))
 
-func renderTemplate(w http.ResponseWriter, tmpl string, p *Pickem) {
+func renderTemplate(w http.ResponseWriter, tmpl string, p *PickemLib.Pickem) {
     err := templates.ExecuteTemplate(w, tmpl, p)
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -30,7 +27,7 @@ func renderTemplate(w http.ResponseWriter, tmpl string, p *Pickem) {
 }
 
 func pickemHandler(w http.ResponseWriter, r *http.Request) {
-    renderTemplate(w, "pickem", &Pickem{Name: "pickem"})
+    renderTemplate(w, "pickem", nil)
 }
 
 func registerHandler(w http.ResponseWriter, r *http.Request) {
