@@ -1,5 +1,6 @@
 {{define "gameChoices"}}
 	{{template "header"}}
+	<div id="gameChoices-page-content">
 	<h1 class="centered">Choose your winners</h1>
 	
 	<form id="gameChoices_form" action="/interface/" method="POST" enctype="multipart/form-data">
@@ -201,6 +202,6 @@
 	</div>
 	<input id="submit_button" type="submit" value="Submit!" />
 </form>
-	
+	</div> <!-- end gameChoices-page-content -->
 	{{template "footer"}}
 {{end}}
