@@ -85,5 +85,8 @@ func main() {
 	http.HandleFunc("/picks/", picksHandler)
 	http.HandleFunc("/gameChoices/", gameChoicesHandler)
 	http.HandleFunc("/interface/", interfaceHandler)
+	http.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {
+        	http.ServeFile(w, r, r.URL.Path[1:])
+    		})
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
