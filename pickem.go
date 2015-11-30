@@ -13,13 +13,20 @@ import (
 )
 
 // var pickem = PickemLib.Data("PickemGameOne")
+var whichGame = "first"
+var whichWeek = "Week1"
+var whichPlayer = "Jon"
 
 var validPath = regexp.MustCompile("^/(pickem|other)/([a-zA-Z0-9]+)$")
 
-// var templates = template.Must( template.ParseFiles( "pickem.html" ) )
-var templates = template.Must(template.ParseGlob("templates/*"))
+func add(x, y int) int {
+    return x + y
+}
+
+var templates = template.Must( template.New("").Funcs(template.FuncMap{ "add": add }).ParseGlob("templates/*") )
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *PickemLib.Pickem) {
+
     err := templates.ExecuteTemplate(w, tmpl, p)
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -56,22 +63,39 @@ func picksHandler(w http.ResponseWriter, r *http.Request) {
     renderTemplate(w, "picks", nil)
 }
 
-func gameChoicesHandler(w http.ResponseWriter, r *http.Request) {
-    renderTemplate(w, "gameChoices", nil)
+func gameChoicesHandler(w http.ResponseWriter, r *http.Request, p *PickemLib.Pickem) {
+    games := make([]PickemLib.Game, 0, len(p.PickemGames[whichGame].Weeks[whichWeek].Games) )
+    for _, v := range p.PickemGames[whichGame].Weeks[whichWeek].Games { games = append( games, v ) }
+    var choices = PickemLib.GamesChoices{ 
+        Player : p.PickemGames[whichGame].Players[whichPlayer],
+        Week : games,
+    }
+    if len(choices.Player.Picks) == 0 {
+        for _, g := range choices.Week {
+            choices.Player.Picks[g.Location] = PickemLib.GamesPicked{ Game : g, Points : 0 }
+        }
+    } 
+    err := templates.ExecuteTemplate(w, "gameChoices", choices)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+    }
+
 }
 
 func interfaceHandler(w http.ResponseWriter, r *http.Request) {
     renderTemplate(w, "interface", nil)
 }
 
-func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
+func makeHandler(fn func(http.ResponseWriter, *http.Request, *PickemLib.Pickem)) http.HandlerFunc {
+
+    var pickem = PickemLib.Saturate("PickemGame")
     return func(w http.ResponseWriter, r *http.Request) {
-        m := validPath.FindStringSubmatch(r.URL.Path)
+        /*  m := validPath.FindStringSubmatch(r.URL.Path)
         if m == nil {
             http.NotFound(w, r)
             return
-        }
-        fn(w, r, m[2])
+        } */
+        fn(w, r, pickem)
     }
 }
 
@@ -83,7 +107,7 @@ func main() {
 	http.HandleFunc("/donate/", donateHandler)
 	http.HandleFunc("/contact/", contactHandler)
 	http.HandleFunc("/picks/", picksHandler)
-	http.HandleFunc("/gameChoices/", gameChoicesHandler)
+	http.HandleFunc("/gameChoices/", makeHandler(gameChoicesHandler))
 	http.HandleFunc("/interface/", interfaceHandler)
 	http.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {
         	http.ServeFile(w, r, r.URL.Path[1:])
